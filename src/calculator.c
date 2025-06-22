@@ -3,13 +3,13 @@
 #include <stdbool.h>
 #include <math.h>
 
-double addition(double x, double y) { return x + y; }
+double addition(const double x, const double y) { return x + y; }
 
-double subtraction(double x, double y) { return x - y; }
+double subtraction(const double x, const double y) { return x - y; }
 
-double multiplication(double x, double y) { return x * y; }
+double multiplication(const double x, const double y) { return x * y; }
 
-double division(double x, double y) {
+double division(const double x, const double y) {
     if (fabs(y) < 1e-10) {
         printf("ERROR: Division by zero is undefined.\n");
         exit(EXIT_FAILURE);
