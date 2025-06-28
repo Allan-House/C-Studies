@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+size_t string_length(const char *str);
 char *string_copy(char *dest, const char *src);
-char *string_concat_safe(char* dest, const char *src, size_t dest_size);
+char *string_concat(char* dest, const char *src, size_t dest_size);
 int string_compare(const char *str1, const char *str2);
 
 int main() {
@@ -11,12 +12,25 @@ int main() {
     string_copy(buffer, "Hello");
     printf("Copied: %s\n", buffer);
     
-    string_concat_safe(buffer, ", world!", sizeof(buffer));
-    printf("After concat: %s\n", buffer);
+    printf("Length: %zu\n", string_length(buffer));
     
-    printf("Compare with 'Hello, world!': %s\n",
-          string_compare(buffer, "Hello, world!") ? "Equal" : "Different");
+    string_concat(buffer, ", world!", sizeof(buffer));
+    printf("After concat: %s\n", buffer);
+    printf("New length: %zu\n", string_length(buffer));
+    
+    printf("Compare with 'Hello, world!': %s\n", 
+           string_compare(buffer, "Hello, world!") ? "Equal" : "Different");
+    
     return 0;
+}
+
+size_t string_length(const char *str) {
+    size_t length = 0;
+    while (*str != '\0') {
+        length++;
+        str++;
+    }
+    return length;
 }
 
 char *string_copy(char *dest, const char *src) {
@@ -30,7 +44,7 @@ char *string_copy(char *dest, const char *src) {
     return original_dest;
 }
 
-char *string_concat_safe(char* dest, const char *src, size_t dest_size) {
+char *string_concat(char* dest, const char *src, size_t dest_size) {
     char *original_dest = dest;
     size_t dest_len = 0;
     
